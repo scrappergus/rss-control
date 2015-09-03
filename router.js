@@ -4,25 +4,26 @@ Router.configure({
 });
 
 
-var permissionHooks = {
-	chill: function(){
-		if(!(Meteor.loggingIn() || Meteor.user())){
-			this.render('login');
-		}else if(!Meteor.user().chill){
-			Router.go('login');
-		}else{
-			Session.set('chill',true);
-			if(window.location.pathname === '/login'){
-				Router.go('home');
-			}
-		}
-		this.next();
-	}
-}
-
-Router.onBeforeAction(permissionHooks.chill);
-
 if (Meteor.isClient) {
+	var permissionHooks = {
+		chill: function(){
+			console.log('..chill');
+			if(!(Meteor.loggingIn() || Meteor.user())){
+				Router.go('login');
+			}else if(!Meteor.user().chill){
+				Router.go('login');
+			}else{
+				Session.set('chill',true);
+				if(window.location.pathname === '/login'){
+					Router.go('home');
+				}
+			}
+			this.next();
+		}
+	}
+
+	Router.onBeforeAction(permissionHooks.chill);
+
 	Session.setDefault('chill',false);
 	Session.setDefault('json','');
 	
