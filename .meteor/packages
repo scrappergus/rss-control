@@ -5,5 +5,10 @@
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
-insecure
+iron:router
+materialize:materialize
+accounts-ui
+accounts-password
+gandev:server-eval
+fourseven:scss
+http
