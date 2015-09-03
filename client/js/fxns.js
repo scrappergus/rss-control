@@ -35,7 +35,7 @@ Meteor.api = {
 				}
 
 				//add to author string
-				console.log(a + ' ' +parseInt(authorsL-1));
+				// console.log(a + ' ' +parseInt(authorsL-1));
 				if ( a == parseInt(authorsL-1)){
 					articles[i]['authorsString'] = articles[i]['authorsString'] + ', and ' + authorString;
 				}else if(a != 0 ){
@@ -47,7 +47,7 @@ Meteor.api = {
 			}
 		}
 		articles = JSON.stringify(articles);
-		console.log(articles);
+		// console.log(articles);
 		return articles;
 	}
 }
