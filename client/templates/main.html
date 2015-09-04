@@ -8,9 +8,10 @@
 	<nav class="aging-nav" role="navigation">
 		<div class="nav-wrapper container">
 			<ul class="right hide-on-med-and-down">
-				<li><a href="/">Home</a></li>
+				<li><a href="{{pathFor 'admin'}}">Home</a></li>
 				<li><a href="{{pathFor 'new'}}">New</a></li>
 				<li><a href="{{pathFor 'past'}}">Past</a></li>
+				<li><a href="{{pathFor 'rss'}}">RSS</a></li>
 				<li>{{> loginButtons}}</li>
 			</ul>
 
