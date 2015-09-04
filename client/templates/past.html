@@ -1,1 +1,41 @@
-<template name="past"></template>
+<template name="past">
+	<div class="row">
+		<div class="col s12">
+			<table>
+				<thead>
+					<tr>
+						<th>Description</th>
+						<th>XML</th>
+						<th>Articles</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each feeds}}
+					<tr>
+						<td>{{description}}</td>
+						<td>{{{pubDate}}}</td>
+						<td>{{#each articles}}{{.}} {{/each}}</td>
+						<td><a class="waves-effect waves-light btn" href="{{pathFor 'pastSingle' }}">View</a></td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</template>
+<template name="pastSingle">
+	<div class="row">
+		<div class="col s12">
+			{{#with feed}}
+				<h4>{{pubDate}}</h4>
+				<p>Articles in Feed:</p>
+				<ul>
+					{{#each articles}}
+						<li>{{.}}</li>
+					{{/each}}
+				</ul>
+			{{/with}}
+		</div>
+	</div>
+</template>
