@@ -30,7 +30,7 @@ if (Meteor.isClient) {
 				if(error){
 					Meteor.api.errors(error.message);
 				}else{
-					Session.set('rssDescription','Advance Online')
+					Session.set('rssDescription','Advance Online Publications')
 					Meteor.api.success(results.content);
 				}
 			});
