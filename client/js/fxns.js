@@ -24,6 +24,7 @@ Meteor.api = {
 	processAuthors: function(articles){
 		articles = JSON.parse(articles);
 		var articlesL = articles.length;
+
 		for(var i=0 ; i< articlesL ; i++){
 			articles[i]['authorsString'] = '';
 			var authors = articles[i]['authors'];
@@ -40,8 +41,10 @@ Meteor.api = {
 
 				//add to author string
 				// console.log(a + ' ' +parseInt(authorsL-1));
-				if ( a == parseInt(authorsL-1)){
+				if ( a == parseInt(authorsL-1) && authorsL != 1 &&  authorsL != 2){
 					articles[i]['authorsString'] = articles[i]['authorsString'] + ', and ' + authorString;
+				}else if ( a == parseInt(authorsL-1) && authorsL === 2){
+					articles[i]['authorsString'] = articles[i]['authorsString'] + ' and ' + authorString;
 				}else if(a != 0 ){
 					articles[i]['authorsString'] = articles[i]['authorsString'] + ', ' + authorString;
 				}else{
@@ -62,7 +65,6 @@ Meteor.rss = {
 		var result = {};
 		var today = new Date();
 		var UTCstring = today.toUTCString();
-		console.log(UTCstring);
     	result['pubDate'] = UTCstring;
     	result['pubDateDate'] = today;
     	result['xml'] = '<?xml version="1.0"?><rss version="2.0"><channel>';
@@ -71,15 +73,23 @@ Meteor.rss = {
 
     	var articlesCount = json.length;
     	for(var i=0 ; i < articlesCount ; i++){
+    		//--db has title with bad html <em>i<em> (tag not closed). 
     		var article = '<item>';
-    		article += '<title>'+json[i]['title']+'</title>';
+    		var title = json[i]['title'];
+    		title = Meteor.rss.fixDB(title);
+    		article += '<title>'+title+'</title>';
     		article += '<link>http://www.impactjournals.com/oncotarget/misc/linkedout.php?pii='+json[i]['pii']+'</link>';
-    		article += '<description>'+json[i]['authorsString']+'</description>';  
+    		article += '<description>' + json[i]['section'] + ' | ' + json[i]['article_pubdate'] + ' | ' + json[i]['authorsString'] + '</description>';  
     		article += '</item>';
 			result['xml'] += article;	
     	}
     	result['xml'] += '</channel></rss>';
 		return result;
 	},
-
+	fixDB: function(title){
+		if(title.indexOf('<em>i<em>') != -1){
+			title = title.replace('<em>i<em>','<em>i</em>');
+		}
+		return title;
+	}
 }
