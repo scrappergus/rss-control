@@ -54,20 +54,17 @@ if (Meteor.isClient) {
 			}
 
 			//xml and pubdate
-			var result = Meteor.rss.objectToXML(json);
-			var xml = result['xml'];
-			var pubDate = result['pubDate'];
-			var date = result['pubDateDate'];
+			var insertJSON = Meteor.rss.objectToXML(json);
+			insertJSON['articles'] = articles;
 
-			feeds.insert({'xml' : xml,'articles' : articles, 'pubDate' : pubDate, 'date' : date, 'description' : rssDescription},function(error,result){
+			Meteor.call('insertFeed',insertJSON, function(error, result){
 				if(error){
 					console.log(error);
-					alert(error.message);
+					alert('Error');
 				}else{
 					Router.go('pastSingle',{'_id':result});
 				}
 			});
-			
 		}
 	});
 };

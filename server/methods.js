@@ -1,4 +1,9 @@
+
 Meteor.methods({
+	'insertFeed': function(json){
+		var docID =  feeds.insert(json);
+		return docID;
+	},
 	'getIssueJson': function(v,i){
 		this.unblock();
 		var param = '&v='+v+'&i='+i;
