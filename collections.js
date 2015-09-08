@@ -27,7 +27,7 @@ if (Meteor.isServer) {
 			}
 		});			
 		Meteor.publish('currentFeed', function() {
-			var currentFeed = feeds.find();
+			var feedsList = feeds.find().sort({'date':-1});
 			return currentFeed;
 		});		
 	});
