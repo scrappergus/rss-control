@@ -35,7 +35,6 @@ if (Meteor.isServer) {
 	//RULES
 	feeds.allow({
 		insert: function (userId, doc) {
-			console.log('insert!');
 			if(userId){
 				var u = Meteor.users.findOne({_id:userId});
 				return u.chill ;
