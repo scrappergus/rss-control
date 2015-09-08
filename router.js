@@ -23,7 +23,6 @@ Router.route('/rss', {
 	action: function() {
 		var currentFeed = feeds.findOne({},{sort:{_id:1}});
 		var headers = {'Content-type': 'application/xml', 'charset' : 'ISO-8859-1'};
-		console.log(headers);
 		this.response.writeHead(200, headers);
 		this.response.end(currentFeed.xml);
 	}
@@ -32,7 +31,6 @@ Router.route('/rss', {
 if (Meteor.isClient) {
 	var permissionHooks = {
 		chill: function(){
-			// console.log('..chill');
 			if(!(Meteor.loggingIn() || Meteor.user())){
 				Router.go('login');
 			}else if(!Meteor.user().chill){
@@ -52,6 +50,8 @@ if (Meteor.isClient) {
 	Session.setDefault('chill',false);
 	Session.setDefault('json','');
 	Session.setDefault('rssDescription','');
+	Session.setDefault('articlesCount',false);
+	Session.setDefault('numShared',false);
 
 	Router.route('/',{
 		name: 'home',
@@ -79,13 +79,15 @@ if (Meteor.isClient) {
 		name: 'new',
 		waitOn: function(){
 			return [
+				Meteor.subscribe('feeds'),
 				Meteor.subscribe('userData')
 			]
 		},
 		data: function(){
 			if(this.ready()){
 				return{
-					header: 'New'
+					header: 'New',
+					feeds: feeds.find().fetch()
 				}
 			}
 		}
@@ -100,9 +102,12 @@ if (Meteor.isClient) {
 		},
 		data: function(){
 			if(this.ready()){
+				var feedsList = feeds.find().fetch();
+				var articles = Meteor.rss.pastArticles();
 				return{
 					header: 'Past Feeds',
-					feeds: feeds.find().fetch()
+					feeds: feedsList,
+					articles: articles
 				}
 			}
 		}

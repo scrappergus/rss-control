@@ -1,4 +1,13 @@
+$red: #f44336;
 $white-off: #f2f2f2;
+
+
+@mixin opacity($opacity) {
+  -webkit-opacity: $opacity;
+     -moz-opacity: $opacity;
+      -ms-opacity: $opacity;
+          opacity: $opacity;
+}
 
 body{
 	background: $white-off;
@@ -11,4 +20,13 @@ h1{
 .collection{
 	height: 500px;
 	overflow: scroll;
+}
+
+.shared{
+	@include opacity(0.25);
+}
+
+/*type*/
+.txt-red{
+	color: $red!important;
 }

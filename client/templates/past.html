@@ -1,10 +1,17 @@
 <template name="past">
 	<div class="row">
 		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s3"><a class="active" href="#feeds">Feeds</a></li>
+				<li class="tab col s3"><a href="#articles">Articles</a></li>
+			</ul>
+		</div>
+		<div class="col s12" id="feeds">
+			<h3>Feeds</h3>
 			<table>
 				<thead>
 					<tr>
-						<th>XML</th>
+						<th>RSS Date</th>
 						<th>Articles</th>
 						<th></th>
 					</tr>
@@ -12,7 +19,7 @@
 				<tbody>
 					{{#each feeds}}
 					<tr>
-						<td>{{{pubDate}}}</td>
+						<td>{{{feedPubDate}}}</td>
 						<td>{{#each articles}}{{.}} {{/each}}</td>
 						<td><a class="waves-effect waves-light btn" href="{{pathFor 'pastSingle' }}">View</a></td>
 					</tr>
@@ -20,13 +27,34 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="col s12" id="articles">
+			<h3>Articles</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>RSS Date</th>
+						<th>pii</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each articles}}
+					<tr>
+						<td>{{{feedDate}}}</td>
+						<td>{{{pii}}}</td>
+					</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
 	</div>
+
+
 </template>
 <template name="pastSingle">
 	<div class="row">
 		<div class="col s12">
 			{{#with feed}}
-				<h4>{{pubDate}}</h4>
+				<h4>{{feedPubDate}}</h4>
 				<p>Articles in Feed:</p>
 				<ul>
 					{{#each articles}}

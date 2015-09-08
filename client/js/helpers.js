@@ -12,6 +12,15 @@ if (Meteor.isClient) {
 			}
 			return articles;
 			
+		},
+		articlesCount: function(){
+			return Session.get('articlesCount');
+		},
+		numShared: function(){
+			return Session.get('numShared');
 		}
 	});
+	Template.registerHelper('equals', function (a, b) {
+		return a === b;
+	});	
 };

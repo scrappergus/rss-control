@@ -53,15 +53,22 @@
 						</div>
 						<div class="row">
 							<div class="col s2">
-								<a class="waves-effect waves-light btn btn-large green " id="send-rss">Send RSS</a>
-								<div class="clearfix"></div>
-								<br>
+								{{#if equals articlesCount numShared}}
+									<p class="txt-red">All articles have been shared</p>
+									{{else}}
+									<a class="waves-effect waves-light btn btn-large green " id="send-rss">Send RSS</a>
+									<div class="clearfix"></div>
+									<br>
+								{{/if}}
 								<a class="waves-effect waves-light btn btn-small orange darken-4" id="get-again">Retry</a>
 							</div>
 							<div class="col s10">
+								{{#if articlesCount}}<b>{{articlesCount}} Total Articles</b>{{/if}}
+								{{#if numShared}}<b> | {{numShared}} Already Shared</b>{{/if}}
+
 								<ul class="collection">
 								{{#each articles}}
-									<li class="collection-item"><h5>{{{title}}}</h5><p>{{section}} | {{article_pubdate}} | {{authorsString}}</p></li>
+									<li class="collection-item {{#if shared}}shared{{/if}}">{{#if shared}}<h6>* Already Shared *</h6>{{/if}}<h5>{{{title}}}</h5><p>{{section}} | {{article_pubdate}} | {{authorsString}}</p></li>
 								{{/each}}
 								</ul>
 							</div>
