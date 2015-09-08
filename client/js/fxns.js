@@ -78,25 +78,25 @@ Meteor.rss = {
 		var result = {};
 		var today = new Date();
 		var UTCstring = today.toUTCString();
-    	result['feedPubDate'] = today;
-    	result['xml'] = '<?xml version="1.0"?><rss version="2.0"><channel>';
-    	result['xml'] += '<pubDate>' + UTCstring + '</pubDate>'; 
-    	result['xml'] += '<title>Oncotarget</title><language>en-us</language><link>http://www.impactjournals.com/oncotarget/index.php?journal=oncotarget</link><description>' + rssDescription + '</description>';
+		result['feedPubDate'] = today;
+		result['xml'] = '<?xml version="1.0"?><rss version="2.0"><channel>';
+		result['xml'] += '<pubDate>' + UTCstring + '</pubDate>'; 
+		result['xml'] += '<title>Oncotarget</title><language>en-us</language><link>http://www.impactjournals.com/oncotarget/index.php?journal=oncotarget</link><description>' + rssDescription + '</description>';
 
-    	var articlesCount = json.length;
-    	for(var i=0 ; i < articlesCount ; i++){
-    		if(!json[i]['shared']){
-	    		var article = '<item>';
-	    		var title = json[i]['title'];
-	    		title = Meteor.rss.fixDB(title);
-	    		article += '<title>'+title+'</title>';
-	    		article += '<link>http://www.impactjournals.com/oncotarget/misc/linkedout.php?pii='+json[i]['pii']+'</link>';
-	    		article += '<description>' + json[i]['section'] + ' | ' + json[i]['article_pubdate'] + ' | ' + json[i]['authorsString'] + '</description>';  
-	    		article += '</item>';
+		var articlesCount = json.length;
+		for(var i=0 ; i < articlesCount ; i++){
+			if(!json[i]['shared']){
+				var article = '<item>';
+				var title = json[i]['title'];
+				title = Meteor.rss.fixDB(title);
+				article += '<title>'+title+'</title>';
+				article += '<link>http://www.impactjournals.com/oncotarget/misc/linkedout.php?pii='+json[i]['pii']+'</link>';
+				article += '<description>' + json[i]['section'] + ' | ' + json[i]['article_pubdate'] + ' | ' + json[i]['authorsString'] + '</description>';  
+				article += '</item>';
 				result['xml'] += article;	    			
-    		}
-    	}
-    	result['xml'] += '</channel></rss>';
+			}
+		}
+		result['xml'] += '</channel></rss>';
 		return result;
 	},
 	fixDB: function(title){
