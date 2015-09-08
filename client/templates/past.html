@@ -4,7 +4,6 @@
 			<table>
 				<thead>
 					<tr>
-						<th>Description</th>
 						<th>XML</th>
 						<th>Articles</th>
 						<th></th>
@@ -13,7 +12,6 @@
 				<tbody>
 					{{#each feeds}}
 					<tr>
-						<td>{{description}}</td>
 						<td>{{{pubDate}}}</td>
 						<td>{{#each articles}}{{.}} {{/each}}</td>
 						<td><a class="waves-effect waves-light btn" href="{{pathFor 'pastSingle' }}">View</a></td>
